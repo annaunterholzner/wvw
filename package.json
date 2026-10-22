@@ -1,7 +1,7 @@
 {
   "name": "wvw",
   "productName": "wvw",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "a desktop app that dances on your workspace — a somatic interruption by aru",
   "main": "main.js",
   "author": {
@@ -54,10 +54,7 @@
           ]
         }
       ],
-      "artifactName": "${productName}-${version}-mac-${arch}.${ext}",
-      "extendInfo": {
-        "LSUIElement": true
-      }
+      "artifactName": "${productName}-${version}-mac-${arch}.${ext}"
     },
     "dmg": {
       "title": "wvw ${version}"

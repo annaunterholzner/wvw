@@ -48,7 +48,7 @@ function saveSettings() {
 
 // ---------- state ----------
 let tray = null, settingsWin = null, overlay = null, overlayTimer = null;
-let nextAt = 0, pausedUntil = 0;
+let nextAt = 0, pausedUntil = 0, quitting = false;
 
 function isResting(d = new Date()) {
   const r = settings.rest; if (!r.enabled || r.from === r.to) return false;
@@ -108,7 +108,7 @@ function startSession(opts = {}) {
   });
   overlay.setIgnoreMouseEvents(true);
   overlay.setAlwaysOnTop(true, 'screen-saver');
-  try { overlay.setVisibleOnAllWorkspaces(true, { visibleOnFullScreen: true }); } catch {}
+  try { overlay.setVisibleOnAllWorkspaces(true, { visibleOnFullScreen: true, skipTransformProcessType: true }); } catch {}
   overlay.setBounds(b);
   const cfg = {
     style, figures, seconds,
@@ -144,8 +144,12 @@ function endSession() {
 }
 
 // ---------- settings window ----------
-function openSettings() {
-  if (settingsWin && !settingsWin.isDestroyed()) { settingsWin.show(); settingsWin.focus(); return; }
+function openSettings(opts = {}) {
+  if (settingsWin && !settingsWin.isDestroyed()) {
+    if (opts.minimized) return;
+    if (settingsWin.isMinimized()) settingsWin.restore();
+    settingsWin.show(); settingsWin.focus(); return;
+  }
   settingsWin = new BrowserWindow({
     width: 920, height: 820, minWidth: 640, minHeight: 560,
     title: 'wvw', backgroundColor: '#f9f9f5', show: false, autoHideMenuBar: true,
@@ -154,11 +158,35 @@ function openSettings() {
     webPreferences: { preload: path.join(__dirname, 'preload.js'), contextIsolation: true, nodeIntegration: false },
   });
   settingsWin.loadFile(path.join(__dirname, 'src', 'settings.html'));
-  settingsWin.once('ready-to-show', () => settingsWin.show());
+  settingsWin.once('ready-to-show', () => { if (opts.minimized) { settingsWin.showInactive(); settingsWin.minimize(); } else settingsWin.show(); });
   settingsWin.on('closed', () => { settingsWin = null; });
   settingsWin.webContents.setWindowOpenHandler(({ url }) => { shell.openExternal(url); return { action: 'deny' }; });
-  if (process.platform === 'darwin' && app.dock) Promise.resolve(app.dock.show()).catch(() => {});
-  settingsWin.on('closed', () => { if (process.platform === 'darwin' && app.dock) app.dock.hide(); });
+  // on windows / linux the X keeps wvw visible in the taskbar (minimized) — quit lives in the tray menu
+  settingsWin.on('close', (e) => {
+    if (quitting || process.platform === 'darwin') return;
+    e.preventDefault();
+    settingsWin.minimize();
+  });
+}
+
+// ---------- mac menu bar (top of screen when wvw is the active app) ----------
+function appMenu() {
+  return Menu.buildFromTemplate([
+    { label: 'wvw', submenu: [
+      { role: 'about', label: 'about wvw' },
+      { type: 'separator' },
+      { label: 'dance now', accelerator: 'CmdOrCtrl+D', click: () => startSession() },
+      { label: 'settings…', accelerator: 'CmdOrCtrl+,', click: openSettings },
+      { type: 'separator' },
+      { role: 'hide', label: 'hide wvw' },
+      { role: 'hideOthers' },
+      { role: 'unhide' },
+      { type: 'separator' },
+      { role: 'quit', label: 'quit wvw' },
+    ] },
+    { role: 'editMenu' },
+    { role: 'windowMenu' },
+  ]);
 }
 
 // ---------- tray ----------
@@ -229,7 +257,18 @@ if (!app.requestSingleInstanceLock()) {
   app.on('second-instance', () => openSettings());
   app.whenReady().then(() => {
     loadSettings();
-    if (process.platform === 'darwin' && app.dock) app.dock.hide();
+    if (process.platform === 'darwin') {
+      Menu.setApplicationMenu(appMenu());
+      if (app.dock) app.dock.setMenu(Menu.buildFromTemplate([
+        { label: 'dance now', click: () => startSession() },
+        { label: 'pause for an hour', click: () => { pausedUntil = Date.now() + 3600_000; broadcast(); } },
+        { label: 'settings…', click: openSettings },
+      ]));
+    } else {
+      Menu.setApplicationMenu(null);
+      // windows / linux: keep a window in the taskbar so wvw is visibly running
+      openSettings({ minimized: !!app.getLoginItemSettings().wasOpenedAtLogin || settings.firstRunDone });
+    }
     if (process.platform === 'win32') app.setAppUserModelId('com.aarruu.wvw');
     tray = new Tray(trayIcon());
     if (process.platform !== 'darwin') tray.on('click', openSettings);
@@ -246,6 +285,14 @@ if (!app.requestSingleInstanceLock()) {
     }
     if (process.env.WVW_DANCE_NOW) setTimeout(() => startSession({ style: process.env.WVW_DANCE_NOW }), 800);
   });
-  app.on('window-all-closed', () => { /* stay alive in the tray */ });
+  app.on('window-all-closed', () => { /* stay alive: dock (mac) / tray */ });
+  const launchedAt = Date.now();
+  app.on('activate', () => { // click on the dock icon
+    let atLogin = false;
+    try { atLogin = app.getLoginItemSettings().wasOpenedAtLogin; } catch {}
+    if (atLogin && Date.now() - launchedAt < 4000) return; // started quietly at login
+    openSettings();
+  });
+  app.on('before-quit', () => { quitting = true; });
   app.on('will-quit', () => globalShortcut.unregisterAll());
 }

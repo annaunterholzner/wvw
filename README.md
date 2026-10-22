@@ -112,8 +112,11 @@ Download the latest version from the **[Releases](../../releases)** page.
 ## activate
 
 - **First launch:** the settings window opens, and a first small body says hello after a few seconds.
-- After that, wvw lives quietly as a **small dancing figure in your menu bar** (mac, top right) or **system tray** (windows, bottom right; it may hide behind the `^` arrow).
-- Click that figure to open the menu:
+- wvw then stays **open and running**, like any other program:
+  - **mac:** its icon stays in the **Dock** with the small dot underneath that shows it's running. A small dancing figure also sits in the **menu bar** (top right).
+  - **windows:** it stays in the **taskbar**, and a small figure sits in the **system tray** (bottom right; it may hide behind the `^` arrow).
+- Closing the window with the **X** does *not* stop wvw. On mac the window closes and wvw keeps running in the Dock; on windows it is minimized to the taskbar. Click the icon to open settings again.
+- From the menu-bar / tray figure (or right-click the Dock icon on mac):
   - **dance now:** a body arrives immediately
   - **dance now as…:** choose one of the ten styles
   - **interruptions on:** tick to let bodies arrive by themselves at random moments
@@ -125,9 +128,10 @@ Download the latest version from the **[Releases](../../releases)** page.
 | you want to… | do this |
 |---|---|
 | end the current dance | press **ESC** (or menu → *reclaim my screen*) |
+| close the settings window | the **X**; wvw keeps running |
 | take a break for an hour | menu → **pause for an hour** |
 | stop the random arrivals but keep wvw | menu → untick **interruptions on** |
-| quit wvw completely | menu → **quit wvw** |
+| quit wvw completely | mac: **⌘Q**, or right-click the Dock icon → **Quit** · windows: tray figure → **quit wvw** |
 | uninstall | mac: drag wvw from Applications to the Bin · windows: Settings → Apps → wvw → Uninstall |
 
 *press ESC anytime to reclaim your screen.*
