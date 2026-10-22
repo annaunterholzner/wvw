@@ -1,6 +1,6 @@
-/* vvw — stage: runs dancers on a canvas in one style */
+/* wvw — stage: runs dancers on a canvas in one style */
 (function () {
-  const V = window.VVW;
+  const V = window.WVW;
 
   class Stage {
     constructor(canvas, opts) {

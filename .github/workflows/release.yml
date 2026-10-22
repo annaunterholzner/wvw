@@ -1,4 +1,4 @@
-# Builds vvw for mac + windows and publishes a GitHub Release.
+# Builds wvw for mac + windows and publishes a GitHub Release.
 # Trigger: push a tag like v0.1.0   (git tag v0.1.0 && git push --tags)
 # Or run it by hand from the Actions tab to get downloadable test builds.
 name: release
@@ -35,7 +35,7 @@ jobs:
           CSC_IDENTITY_AUTO_DISCOVERY: 'false'
       - uses: actions/upload-artifact@v4
         with:
-          name: vvw-${{ runner.os }}
+          name: wvw-${{ runner.os }}
           path: |
             dist/*.dmg
             dist/*.exe
@@ -55,10 +55,10 @@ jobs:
           files: artifacts/*
           generate_release_notes: true
           body: |
-            **vvw** — a desktop app that dances on your workspace.
+            **wvw** — a desktop app that dances on your workspace.
             your body is wider, vaster, wilder than this screen allows.
 
-            **mac:** download the `.dmg` for your chip (`arm64` = Apple Silicon, `x64` = Intel). The app is not notarized yet — the first time, right-click vvw in Applications → **Open** → **Open**.
+            **mac:** download the `.dmg` for your chip (`arm64` = Apple Silicon, `x64` = Intel). The app is not notarized yet — the first time, right-click wvw in Applications → **Open** → **Open**.
             **windows:** run the `setup.exe` (or the portable `.exe`). If SmartScreen appears, click **More info → Run anyway**.
 
             press ESC anytime to reclaim your screen.

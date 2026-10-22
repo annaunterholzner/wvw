@@ -97,3 +97,4 @@ footer a:hover { color: var(--ink); }
   .two { grid-template-columns: 1fr; gap: 10px; }
   .hero h1 { font-size: 56px; }
 }
+.tag .wvw { font-style: normal; color: var(--ink); }

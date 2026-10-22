@@ -1,4 +1,4 @@
-/* vvw — a desktop app that dances on your workspace.
+/* wvw — a desktop app that dances on your workspace.
  * aru · anna rebecca unterholzner · 2026
  *
  * main process: decides *when* a body arrives. the renderer decides *how* it moves.
@@ -43,7 +43,7 @@ function loadSettings() {
 }
 function saveSettings() {
   try { fs.mkdirSync(path.dirname(settingsFile()), { recursive: true }); fs.writeFileSync(settingsFile(), JSON.stringify(settings, null, 2)); }
-  catch (e) { console.error('vvw: could not save settings', e); }
+  catch (e) { console.error('wvw: could not save settings', e); }
 }
 
 // ---------- state ----------
@@ -59,7 +59,7 @@ function status() {
   return { running: settings.running, nextAt, pausedUntil, dancing: !!overlay, resting: isResting(), now: Date.now() };
 }
 function broadcast() {
-  if (settingsWin && !settingsWin.isDestroyed()) settingsWin.webContents.send('vvw:status', status());
+  if (settingsWin && !settingsWin.isDestroyed()) settingsWin.webContents.send('wvw:status', status());
   refreshTray();
 }
 
@@ -118,7 +118,7 @@ function startSession(opts = {}) {
   };
   overlay.webContents.once('did-finish-load', () => {
     if (!overlay) return;
-    overlay.webContents.send('vvw:start', cfg);
+    overlay.webContents.send('wvw:start', cfg);
     overlay.showInactive();
   });
   overlay.on('closed', () => { overlay = null; });
@@ -131,7 +131,7 @@ function startSession(opts = {}) {
 }
 function stopSession() {
   if (!overlay) return;
-  overlay.webContents.send('vvw:stop');
+  overlay.webContents.send('wvw:stop');
   clearTimeout(overlayTimer);
   overlayTimer = setTimeout(endSession, 2500);
 }
@@ -148,7 +148,7 @@ function openSettings() {
   if (settingsWin && !settingsWin.isDestroyed()) { settingsWin.show(); settingsWin.focus(); return; }
   settingsWin = new BrowserWindow({
     width: 920, height: 820, minWidth: 640, minHeight: 560,
-    title: 'vvw', backgroundColor: '#f9f9f5', show: false, autoHideMenuBar: true,
+    title: 'wvw', backgroundColor: '#f9f9f5', show: false, autoHideMenuBar: true,
     titleBarStyle: process.platform === 'darwin' ? 'hiddenInset' : 'default',
     icon: path.join(__dirname, 'assets', 'icon.png'),
     webPreferences: { preload: path.join(__dirname, 'preload.js'), contextIsolation: true, nodeIntegration: false },
@@ -185,7 +185,7 @@ function trayIcon() {
 function refreshTray() {
   if (!tray) return;
   const menu = Menu.buildFromTemplate([
-    { label: 'vvw', enabled: false },
+    { label: 'wvw', enabled: false },
     { label: statusLine(), enabled: false },
     { type: 'separator' },
     overlay
@@ -200,15 +200,15 @@ function refreshTray() {
     { label: 'settings…', click: openSettings },
     { type: 'separator' },
     { label: 'aarruu.com', click: () => shell.openExternal('https://aarruu.com') },
-    { label: 'quit vvw', role: 'quit' },
+    { label: 'quit wvw', role: 'quit' },
   ]);
   tray.setContextMenu(menu);
-  tray.setToolTip(`vvw — ${statusLine()}`);
+  tray.setToolTip(`wvw — ${statusLine()}`);
 }
 
 // ---------- ipc ----------
-ipcMain.handle('vvw:get', () => ({ settings, status: status(), styles: STYLES, version: app.getVersion() }));
-ipcMain.handle('vvw:set', (_e, patch) => {
+ipcMain.handle('wvw:get', () => ({ settings, status: status(), styles: STYLES, version: app.getVersion() }));
+ipcMain.handle('wvw:set', (_e, patch) => {
   const before = JSON.stringify([settings.minMinutes, settings.maxMinutes, settings.running]);
   merge(settings, patch);
   saveSettings();
@@ -217,10 +217,10 @@ ipcMain.handle('vvw:set', (_e, patch) => {
   broadcast();
   return { settings, status: status() };
 });
-ipcMain.handle('vvw:dance', (_e, o) => { startSession(o || {}); return status(); });
-ipcMain.handle('vvw:pause', (_e, minutes) => { pausedUntil = minutes > 0 ? Date.now() + minutes * 60_000 : 0; if (!pausedUntil) scheduleNext(); broadcast(); return status(); });
-ipcMain.handle('vvw:link', (_e, url) => { if (/^https:\/\//.test(url)) shell.openExternal(url); });
-ipcMain.on('vvw:done', () => endSession());
+ipcMain.handle('wvw:dance', (_e, o) => { startSession(o || {}); return status(); });
+ipcMain.handle('wvw:pause', (_e, minutes) => { pausedUntil = minutes > 0 ? Date.now() + minutes * 60_000 : 0; if (!pausedUntil) scheduleNext(); broadcast(); return status(); });
+ipcMain.handle('wvw:link', (_e, url) => { if (/^https:\/\//.test(url)) shell.openExternal(url); });
+ipcMain.on('wvw:done', () => endSession());
 
 // ---------- life ----------
 if (!app.requestSingleInstanceLock()) {
@@ -230,7 +230,7 @@ if (!app.requestSingleInstanceLock()) {
   app.whenReady().then(() => {
     loadSettings();
     if (process.platform === 'darwin' && app.dock) app.dock.hide();
-    if (process.platform === 'win32') app.setAppUserModelId('com.aarruu.vvw');
+    if (process.platform === 'win32') app.setAppUserModelId('com.aarruu.wvw');
     tray = new Tray(trayIcon());
     if (process.platform !== 'darwin') tray.on('click', openSettings);
     scheduleNext();
@@ -244,7 +244,7 @@ if (!app.requestSingleInstanceLock()) {
       // a first, small hello
       setTimeout(() => startSession({ style: 'ink' }), 4000);
     }
-    if (process.env.VVW_DANCE_NOW) setTimeout(() => startSession({ style: process.env.VVW_DANCE_NOW }), 800);
+    if (process.env.WVW_DANCE_NOW) setTimeout(() => startSession({ style: process.env.WVW_DANCE_NOW }), 800);
   });
   app.on('window-all-closed', () => { /* stay alive in the tray */ });
   app.on('will-quit', () => globalShortcut.unregisterAll());

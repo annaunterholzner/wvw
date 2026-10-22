@@ -1,19 +1,67 @@
-# vvw
+# wvw
+
+### wide · vast · wild
 
 **a desktop app that dances on your workspace.**
 *your body is wider, vaster, wilder than this screen allows.*
 
-vvw lives quietly in your menu bar / system tray. At random moments it interrupts your screen: a small body arrives on a transparent, click-through layer and dances, falls, rolls, lies around, spins upside-down, then leaves. Each arrival is drawn in one of ten art styles.
-
-It is a somatic project: a gentle sabotage of focused labour, and a reminder that your body holds far more movement vocabularies than the three-to-five gestures typing demands.
-
-**press ESC anytime to reclaim your screen.**
-
-— aru · anna rebecca unterholzner · [aarruu.com](https://aarruu.com)
+`wvw /wɪv/, n.` — a desktop application by aru (anna rebecca unterholzner) · 2026 · [aarruu.com](https://aarruu.com)
 
 ---
 
-## ten bodies
+## what is wvw?
+
+wvw is a small creature that lives on your computer. While you work, at random and unannounced moments, a body appears on top of your screen. It dances, falls, rolls, lies around, goes upside-down, scales up, spins, and leaves trails that fade. Then it disappears again.
+
+It arrives in one of **ten art styles**, from a thin ink line to a cloud of dust to a body typed out of characters. It never blocks your work: you can keep clicking and typing through it. And it always leaves when you ask: **press ESC**.
+
+wvw is a somatic project. It is three things at once:
+
+1. **a small dancing figure** that inhabits your screen while you work.
+2. **a gentle sabotage of focused labour:** movement sequences that refuse efficiency and constraint.
+3. **a reminder** that your body contains far more movement vocabularies than the three-to-five gestures typing demands.
+
+## wide · vast · wild
+
+The name is the premise, whispered into the machine:
+
+- **wide:** the body takes up more space than the strip between keyboard and screen. The figure travels across the whole desktop and sometimes grows far beyond its frame.
+- **vast:** the body knows far more than the gestures of work. wvw carries 15 movement vocabularies: rolling, falling, giving weight, being upside down, floating, shaking out, jittering.
+- **wild:** the body does not ask permission. wvw arrives when it wants, moves in ways that are not useful, and leaves trails that fade.
+
+## why this project?
+
+> **research question**
+> *What happens to a body that spends its days at a screen, when the screen itself starts to dance? Can a desktop application, the very tool that narrows us to ten fingers and a chair, become a site that reminds the body of how wide, vast and wild it is?*
+
+Screen work shrinks the moving body to a handful of gestures: typing, clicking, scrolling, sitting still. wvw uses that same tool to whisper a different vocabulary of the body back to the person in front of it. It inhabits the space between work and play.
+
+Further questions the project moves with:
+
+- Can an interruption be an *invitation* rather than a distraction?
+- What does a body on the screen awaken in the body in front of the screen: mirroring, laughter, a stretch, a pause?
+- How can practices of contact improvisation (non-performing, non-violent body communication, rolling, falling, giving weight) be translated into a digital medium?
+- Can a personal ritual of embodied freedom be scheduled, or does it have to arrive by surprise?
+
+### lineage
+
+- **motionlab / cologne** *(practice):* contact improvisation as movement-driven decision-making. A system of rolling, falling, being upside down, giving weight.
+- **sondra perry** *(medium):* video, computer-based media and performance as ways to reflect critically on new technologies of the body. Digital tools as material to be pressed back against.
+
+---
+
+## how it operates
+
+**choreographically**
+
+- wvw waits in the background. At a random moment within the rhythm you choose (by default somewhere between 8 and 35 minutes), a body arrives.
+- It picks one of the ten styles and moves through movement vocabularies from the moods you have invited. Every movement blends into the next, and the dance is never exactly the same twice.
+- Gravity is real: whatever part of the body is lowest touches the floor. So it can stand, lie, roll, do a handstand or cartwheel along an invisible ground.
+- Sometimes it suddenly grows huge (*bursts*), and sometimes two or three bodies arrive together (*chorus*).
+- After the session length you chose (10 seconds up to "until ESC"), the body shrinks away and wvw waits for the next moment.
+- At night the creature sleeps (*rest*, by default 22:00–07:00).
+
+**the ten bodies**
 
 | | style | |
 |---|---|---|
@@ -28,40 +76,65 @@ It is a somatic project: a gentle sabotage of focused labour, and a reminder tha
 | 09 | **sumi** | brush and ink, an ensō for a head |
 | 10 | **smear** | the gesture, dragged through glass |
 
-## four moods (movement vocabularies)
+**the four moods (movement vocabularies)**
 
 - **grounded:** falling, rolling, lying around, crawling, leaning / weight-share, curling
 - **playful:** jitter, bounce, shake-out, silly walk
 - **upside-down:** spin, handstand, cartwheel
 - **expansive:** sway, reach, float
 
-All styles share one body, so every style speaks every vocabulary. Movement is procedural and never repeats exactly. Gravity is real: whatever part of the body is lowest touches the floor.
+**technically**
 
-## settings
-
-Open **settings…** from the tray icon:
-
-- **rhythm:** how often a body arrives (e.g. somewhere between 8 and 35 minutes)
-- **session:** how long it dances, from a 10-second burst to "until ESC"
-- **styles + moods:** which bodies and vocabularies are invited
-- **body:** size, sudden scale *bursts*, and *chorus* (sometimes 2–3 bodies arrive)
-- **rest:** the creature sleeps at night, no movement
-- **start at login**
-
-The tray menu also has *dance now*, *dance now as…* (pick a style), and *pause for an hour*.
+- built with **Electron** for **mac + windows**
+- each arrival opens one transparent, click-through, always-on-top layer on the screen where your mouse is. It never takes focus, so you can keep working underneath it.
+- the layer is closed as soon as the body leaves. Between arrivals only a small timer runs.
+- the body is drawn live on a canvas: one skeleton, 15 procedural movement vocabularies, ten renderers.
+- nothing is sent anywhere. Settings are stored locally on your computer.
 
 ---
 
-## install (for people)
+## install
 
-Download from the [Releases](../../releases) page.
+Download the latest version from the **[Releases](../../releases)** page.
 
-- **mac:** the `.dmg` for your chip (`arm64` = Apple Silicon, `x64` = Intel). vvw isn't notarized by Apple yet, so the first time: right-click vvw in Applications → **Open** → **Open**. If macOS says it's "damaged", run `xattr -cr /Applications/vvw.app` in Terminal.
-- **windows:** `vvw-…-windows-setup.exe` (installer) or `…-portable.exe` (no install). If SmartScreen appears: **More info → Run anyway**.
+**mac**
 
-vvw has no window when it starts. Look for the small dancing figure in the menu bar (mac) or system tray (windows).
+1. Download the `.dmg` for your Mac: `arm64` for Apple Silicon (M1/M2/M3/M4), `x64` for Intel.
+2. Open it and drag **wvw** into **Applications**.
+3. The first time only: wvw is not yet notarized by Apple, so right-click wvw in Applications → **Open** → **Open**.
+   If macOS says the app is "damaged", open Terminal and run `xattr -cr /Applications/wvw.app`, then open it again.
 
-## develop
+**windows**
+
+1. Download `wvw-…-windows-setup.exe` (installer) or `wvw-…-windows-portable.exe` (runs without installing).
+2. If Windows SmartScreen appears: **More info → Run anyway**.
+
+## activate
+
+- **First launch:** the settings window opens, and a first small body says hello after a few seconds.
+- After that, wvw lives quietly as a **small dancing figure in your menu bar** (mac, top right) or **system tray** (windows, bottom right; it may hide behind the `^` arrow).
+- Click that figure to open the menu:
+  - **dance now:** a body arrives immediately
+  - **dance now as…:** choose one of the ten styles
+  - **interruptions on:** tick to let bodies arrive by themselves at random moments
+  - **settings…:** rhythm, session length, styles, moods, size, bursts, chorus, rest, start at login
+- To have wvw always running, tick **start wvw when I log in** in settings.
+
+## close
+
+| you want to… | do this |
+|---|---|
+| end the current dance | press **ESC** (or menu → *reclaim my screen*) |
+| take a break for an hour | menu → **pause for an hour** |
+| stop the random arrivals but keep wvw | menu → untick **interruptions on** |
+| quit wvw completely | menu → **quit wvw** |
+| uninstall | mac: drag wvw from Applications to the Bin · windows: Settings → Apps → wvw → Uninstall |
+
+*press ESC anytime to reclaim your screen.*
+
+---
+
+## for developers
 
 ```bash
 npm install
@@ -71,43 +144,27 @@ npm start
 To see a body immediately while developing:
 
 ```bash
-VVW_DANCE_NOW=sumi npm start        # mac / linux
-set VVW_DANCE_NOW=sumi && npm start # windows cmd
+WVW_DANCE_NOW=sumi npm start          # mac / linux
+set WVW_DANCE_NOW=sumi && npm start   # windows cmd
 ```
 
-## publish a release on GitHub
+| file | what it does |
+|---|---|
+| `main.js` | the rhythm of interruptions, rest periods, ESC, tray menu, settings storage |
+| `src/engine/body.js` | the skeleton, 15 movement vocabularies, choreography, gravity, bursts |
+| `src/engine/styles.js` | the ten ways of drawing that body |
+| `src/engine/stage.js` | runs bodies on a canvas (desktop overlay + previews in settings) |
+| `src/settings.*` | the settings window |
 
-1. Create a repo and push this folder:
-   ```bash
-   git init && git add . && git commit -m "vvw 0.1.0"
-   git branch -M main
-   git remote add origin https://github.com/<you>/vvw.git
-   git push -u origin main
-   ```
-2. Tag a version and push the tag:
-   ```bash
-   git tag v0.1.0
-   git push --tags
-   ```
-3. GitHub Actions (`.github/workflows/release.yml`) builds the mac `.dmg`s and windows `.exe`s and attaches them to a new Release. Takes ~10 minutes. For the next version, bump `"version"` in `package.json` and tag again.
+### releasing a new version
 
-You can also run the workflow by hand (Actions → release → Run workflow) to get test builds as downloadable artifacts without making a release.
+1. Raise `"version"` in `package.json` (e.g. `0.2.0`) and commit.
+2. `git tag v0.2.0 && git push --tags`
+3. GitHub Actions (`.github/workflows/release.yml`) builds the mac `.dmg`s and windows `.exe`s and publishes them as a Release (~10 minutes).
 
-### signing (optional, later)
+Builds are currently unsigned. To remove the first-open warnings later, add an Apple Developer ID and a Windows code-signing certificate as repository secrets (`CSC_LINK`, `CSC_KEY_PASSWORD`, `APPLE_ID`, `APPLE_APP_SPECIFIC_PASSWORD`, `APPLE_TEAM_ID`).
 
-Builds are unsigned, which is why mac/windows show a warning on first open. To remove it you need an Apple Developer ID (mac) and a code-signing certificate (windows). electron-builder picks them up from `CSC_LINK` / `CSC_KEY_PASSWORD` (and `APPLE_ID`, `APPLE_APP_SPECIFIC_PASSWORD`, `APPLE_TEAM_ID` for notarization) as repository secrets.
+---
 
-## how it works
-
-- **electron**, one transparent, click-through, always-on-top window per arrival, on the screen where your cursor is. It never takes focus and is destroyed when the body leaves, so nothing runs between arrivals except a timer.
-- `src/engine/body.js`: the skeleton, the 15 movement vocabularies, choreography (blending one movement into the next), gravity, bursts
-- `src/engine/styles.js`: the ten ways of drawing that body
-- `src/engine/stage.js`: runs bodies on a canvas (the desktop overlay and the live previews in settings)
-- `main.js`: the rhythm of interruptions, rest periods, ESC, tray, settings storage
-
-## lineage
-
-- **motionlab / cologne:** contact improvisation as movement-driven decision-making: rolling, falling, being upside down, giving weight.
-- **sondra perry:** video, computer-based media and performance as ways to reflect critically on new technologies of the body.
-
-MIT license.
+wvw · a desktop application by aru · 2026 · MIT license
+*for reading. for looking. for moving.*

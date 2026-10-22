@@ -1,9 +1,9 @@
-/* vvw — body engine
+/* wvw — body engine
  * one skeleton, many vocabularies. the body is computed here;
  * how it looks is decided by the styles.
  */
 (function () {
-  const V = (window.VVW = window.VVW || {});
+  const V = (window.WVW = window.WVW || {});
   const PI = Math.PI, TAU = PI * 2, HALF = PI / 2;
 
   // ---------- small math ----------

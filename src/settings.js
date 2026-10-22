@@ -5,9 +5,9 @@
   const sessionLabel = (s) => (s === 0 ? 'until ESC' : s < 60 ? `${s} sec` : `${s / 60} min`);
   const minLabel = (m) => (m < 60 ? `${m} min` : `${Math.floor(m / 60)} h${m % 60 ? ' ' + (m % 60) + ' min' : ''}`);
 
-  let { settings: S, status, version } = await window.vvw.get();
+  let { settings: S, status, version } = await window.wvw.get();
   $('#version').textContent = `a desktop ritual · v${version}`;
-  const save = async (patch) => { const r = await window.vvw.set(patch); S = r.settings; status = r.status; renderStatus(); };
+  const save = async (patch) => { const r = await window.wvw.set(patch); S = r.settings; status = r.status; renderStatus(); };
 
   // ---------- status ----------
   function renderStatus() {
@@ -26,16 +26,16 @@
     $('#danceNow').disabled = status.dancing;
     $('#pause').textContent = status.pausedUntil > now ? 'resume' : 'pause 1 h';
   }
-  window.vvw.onStatus((s) => { status = s; renderStatus(); });
+  window.wvw.onStatus((s) => { status = s; renderStatus(); });
   setInterval(() => { status.now = Date.now(); renderStatus(); }, 20000);
   $('#running').addEventListener('change', (e) => save({ running: e.target.checked }));
-  $('#danceNow').addEventListener('click', () => window.vvw.dance());
-  $('#pause').addEventListener('click', async () => { status = await window.vvw.pause(status.pausedUntil > Date.now() ? 0 : 60); renderStatus(); });
+  $('#danceNow').addEventListener('click', () => window.wvw.dance());
+  $('#pause').addEventListener('click', async () => { status = await window.wvw.pause(status.pausedUntil > Date.now() ? 0 : 60); renderStatus(); });
 
   // ---------- styles (live previews) ----------
   const grid = $('#styles');
   const stages = [];
-  VVW.styles.forEach((st, i) => {
+  WVW.styles.forEach((st, i) => {
     const tile = document.createElement('div');
     tile.className = 'tile';
     tile.innerHTML = `<canvas></canvas><div class="blurb"></div><button class="try" title="try on desktop">▶</button>
@@ -51,11 +51,11 @@
       if (!next && count <= 1) return; // at least one body must remain
       save({ styles: { [st.id]: next } }).then(sync);
     });
-    tile.querySelector('.try').addEventListener('click', () => window.vvw.dance({ style: st.id }));
+    tile.querySelector('.try').addEventListener('click', () => window.wvw.dance({ style: st.id }));
     requestAnimationFrame(() => {
       const cv = tile.querySelector('canvas');
       const h = cv.getBoundingClientRect().height || 140;
-      const stage = new VVW.Stage(cv, { style: st.id, size: h * 0.5, preview: true, bursts: false, moods: moodList() });
+      const stage = new WVW.Stage(cv, { style: st.id, size: h * 0.5, preview: true, bursts: false, moods: moodList() });
       stage.start();
       stages.push(stage);
     });
@@ -90,9 +90,9 @@
   renderSession();
 
   // ---------- moods ----------
-  function moodList() { const on = Object.keys(S.moods).filter((k) => S.moods[k]); return on.length ? on : Object.keys(VVW.MOODS); }
+  function moodList() { const on = Object.keys(S.moods).filter((k) => S.moods[k]); return on.length ? on : Object.keys(WVW.MOODS); }
   const moodsEl = $('#moods');
-  Object.entries(VVW.MOODS).forEach(([id, m]) => {
+  Object.entries(WVW.MOODS).forEach(([id, m]) => {
     const el = document.createElement('div');
     el.className = 'mood';
     el.innerHTML = `<b></b><span></span>`;
@@ -129,6 +129,6 @@
     el.addEventListener('change', () => save({ rest: { [key]: +el.value } }));
   }
 
-  $('#site').addEventListener('click', (e) => { e.preventDefault(); window.vvw.link('https://aarruu.com'); });
+  $('#site').addEventListener('click', (e) => { e.preventDefault(); window.wvw.link('https://aarruu.com'); });
   renderStatus();
 })();

@@ -1,8 +1,8 @@
-/* vvw — ten ways to draw a body
+/* wvw — ten ways to draw a body
  * every style receives the same skeleton (d.J) and its recent memory (d.hist).
  */
 (function () {
-  const V = window.VVW;
+  const V = window.WVW;
   const { J } = V;
   const { clamp, lerp, hash, mulberry32, vnoise, TAU, PI } = V.math;
 

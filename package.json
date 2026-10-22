@@ -1,6 +1,6 @@
 {
-  "name": "vvw",
-  "productName": "vvw",
+  "name": "wvw",
+  "productName": "wvw",
   "version": "0.1.0",
   "description": "a desktop app that dances on your workspace — a somatic interruption by aru",
   "main": "main.js",
@@ -28,8 +28,8 @@
     "electron-builder": "^26.15.3"
   },
   "build": {
-    "appId": "com.aarruu.vvw",
-    "productName": "vvw",
+    "appId": "com.aarruu.wvw",
+    "productName": "wvw",
     "copyright": "© 2026 aru — anna rebecca unterholzner",
     "files": [
       "main.js",
@@ -60,7 +60,7 @@
       }
     },
     "dmg": {
-      "title": "vvw ${version}"
+      "title": "wvw ${version}"
     },
     "win": {
       "target": [
