@@ -1,0 +1,64 @@
+# Builds vvw for mac + windows and publishes a GitHub Release.
+# Trigger: push a tag like v0.1.0   (git tag v0.1.0 && git push --tags)
+# Or run it by hand from the Actions tab to get downloadable test builds.
+name: release
+
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: macos-latest
+            target: --mac
+          - os: windows-latest
+            target: --win
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: build
+        run: npx electron-builder ${{ matrix.target }} --publish never
+        env:
+          CSC_IDENTITY_AUTO_DISCOVERY: 'false'
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vvw-${{ runner.os }}
+          path: |
+            dist/*.dmg
+            dist/*.exe
+          if-no-files-found: error
+
+  release:
+    needs: build
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+          merge-multiple: true
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: artifacts/*
+          generate_release_notes: true
+          body: |
+            **vvw** — a desktop app that dances on your workspace.
+            your body is wider, vaster, wilder than this screen allows.
+
+            **mac:** download the `.dmg` for your chip (`arm64` = Apple Silicon, `x64` = Intel). The app is not notarized yet — the first time, right-click vvw in Applications → **Open** → **Open**.
+            **windows:** run the `setup.exe` (or the portable `.exe`). If SmartScreen appears, click **More info → Run anyway**.
+
+            press ESC anytime to reclaim your screen.

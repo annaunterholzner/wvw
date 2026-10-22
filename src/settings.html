@@ -1,0 +1,115 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'">
+  <title>vvw</title>
+  <link rel="stylesheet" href="settings.css">
+</head>
+<body>
+  <header class="top">
+    <div class="drag"></div>
+    <div class="rule"></div>
+    <div class="row">
+      <div class="who"><b>aru</b> <span>vvw · settings</span></div>
+      <div class="meta" id="version">a desktop ritual · 2026</div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h1>vvw <em>/wɪv/, n.</em></h1>
+      <p class="tag">your body is wider, vaster, wilder than this screen allows.</p>
+
+      <div class="status">
+        <label class="switch">
+          <input type="checkbox" id="running">
+          <span class="knob"></span>
+          <span class="lbl">interruptions</span>
+        </label>
+        <div class="line" id="statusLine">—</div>
+        <div class="actions">
+          <button id="danceNow" class="primary">dance now</button>
+          <button id="pause">pause 1 h</button>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec">§ 01 styles <span>— ten bodies. click to invite or uninvite. ▶ to try on your desktop.</span></div>
+      <div class="grid" id="styles"></div>
+    </section>
+
+    <section class="two">
+      <div>
+        <div class="sec">§ 02 rhythm</div>
+        <p class="q">a body arrives somewhere between</p>
+        <div class="range">
+          <input type="range" id="minMin" min="1" max="120" step="1">
+          <output id="minOut"></output>
+        </div>
+        <div class="range">
+          <input type="range" id="maxMin" min="1" max="180" step="1">
+          <output id="maxOut"></output>
+        </div>
+        <div class="chips" id="rhythmChips">
+          <button data-min="2" data-max="8">restless</button>
+          <button data-min="8" data-max="35">regular</button>
+          <button data-min="30" data-max="90">patient</button>
+        </div>
+      </div>
+      <div>
+        <div class="sec">§ 03 session</div>
+        <p class="q">how long it dances</p>
+        <div class="range">
+          <input type="range" id="session" min="0" max="7" step="1">
+          <output id="sessionOut"></output>
+        </div>
+        <p class="hint">from a single burst to forever. ESC always ends it.</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec">§ 04 mood <span>— which movement vocabularies it speaks</span></div>
+      <div class="moods" id="moods"></div>
+    </section>
+
+    <section class="two">
+      <div>
+        <div class="sec">§ 05 body</div>
+        <div class="seg" id="size">
+          <button data-v="small">small</button>
+          <button data-v="medium">medium</button>
+          <button data-v="large">large</button>
+          <button data-v="wild">wild</button>
+        </div>
+        <label class="check"><input type="checkbox" id="bursts"> <span>bursts <i>— it suddenly grows, then returns</i></span></label>
+        <label class="check"><input type="checkbox" id="chorus"> <span>chorus <i>— sometimes more than one body arrives</i></span></label>
+      </div>
+      <div>
+        <div class="sec">§ 06 rest</div>
+        <label class="check"><input type="checkbox" id="restOn"> <span>the creature sleeps at night</span></label>
+        <div class="hours">
+          <span>sleep from</span> <select id="restFrom"></select>
+          <span>wake at</span> <select id="restTo"></select>
+        </div>
+        <div class="sec small">§ 07 system</div>
+        <label class="check"><input type="checkbox" id="login"> <span>start vvw when I log in</span></label>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="rule thin"></div>
+    <div class="row">
+      <span>press ESC anytime to reclaim your screen.</span>
+      <a href="https://aarruu.com" id="site">aarruu.com</a>
+    </div>
+  </footer>
+
+  <script src="engine/body.js"></script>
+  <script src="engine/styles.js"></script>
+  <script src="engine/stage.js"></script>
+  <script src="settings.js"></script>
+</body>
+</html>

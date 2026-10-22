@@ -1,0 +1,98 @@
+{
+  "name": "vvw",
+  "productName": "vvw",
+  "version": "0.1.0",
+  "description": "a desktop app that dances on your workspace — a somatic interruption by aru",
+  "main": "main.js",
+  "author": {
+    "name": "aru — anna rebecca unterholzner",
+    "url": "https://aarruu.com"
+  },
+  "homepage": "https://aarruu.com",
+  "license": "MIT",
+  "keywords": [
+    "somatic",
+    "dance",
+    "desktop",
+    "art",
+    "electron"
+  ],
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder --publish never",
+    "dist:mac": "electron-builder --mac --publish never",
+    "dist:win": "electron-builder --win --publish never"
+  },
+  "devDependencies": {
+    "electron": "^45.0.0",
+    "electron-builder": "^26.15.3"
+  },
+  "build": {
+    "appId": "com.aarruu.vvw",
+    "productName": "vvw",
+    "copyright": "© 2026 aru — anna rebecca unterholzner",
+    "files": [
+      "main.js",
+      "preload.js",
+      "src/**/*",
+      "assets/**/*",
+      "package.json"
+    ],
+    "directories": {
+      "buildResources": "build",
+      "output": "dist"
+    },
+    "mac": {
+      "category": "public.app-category.entertainment",
+      "identity": null,
+      "target": [
+        {
+          "target": "dmg",
+          "arch": [
+            "arm64",
+            "x64"
+          ]
+        }
+      ],
+      "artifactName": "${productName}-${version}-mac-${arch}.${ext}",
+      "extendInfo": {
+        "LSUIElement": true
+      }
+    },
+    "dmg": {
+      "title": "vvw ${version}"
+    },
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "artifactName": "${productName}-${version}-windows-setup.${ext}"
+    },
+    "portable": {
+      "artifactName": "${productName}-${version}-windows-portable.${ext}"
+    },
+    "linux": {
+      "target": [
+        "AppImage"
+      ],
+      "category": "Art",
+      "artifactName": "${productName}-${version}-linux.${ext}"
+    }
+  }
+}
