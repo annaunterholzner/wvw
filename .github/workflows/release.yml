@@ -1,10 +1,15 @@
 # Builds wvw for mac + windows and publishes a GitHub Release.
-# Trigger: push a tag like v0.1.0   (git tag v0.1.0 && git push --tags)
-# Or run it by hand from the Actions tab to get downloadable test builds.
+#
+# A release is made automatically whenever "version" in package.json is new:
+#   1. raise "version" in package.json (e.g. 0.2.0)
+#   2. commit and push to main
+# GitHub then builds the apps and publishes the release "v0.2.0" (~10 min).
+# You can also run it by hand: Actions tab → release → Run workflow.
 name: release
 
 on:
   push:
+    branches: [main]
     tags: ['v*']
   workflow_dispatch:
 
@@ -12,7 +17,30 @@ permissions:
   contents: write
 
 jobs:
+  version:
+    runs-on: ubuntu-latest
+    outputs:
+      tag: ${{ steps.v.outputs.tag }}
+      release: ${{ steps.v.outputs.release }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: v
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TAG="v$(node -p "require('./package.json').version")"
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+          if gh release view "$TAG" -R "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            echo "release $TAG already exists"
+            echo "release=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "will publish $TAG"
+            echo "release=true" >> "$GITHUB_OUTPUT"
+          fi
+
   build:
+    needs: version
+    if: needs.version.outputs.release == 'true' || github.event_name == 'workflow_dispatch'
     strategy:
       fail-fast: false
       matrix:
@@ -42,8 +70,8 @@ jobs:
           if-no-files-found: error
 
   release:
-    needs: build
-    if: startsWith(github.ref, 'refs/tags/v')
+    needs: [version, build]
+    if: needs.version.outputs.release == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/download-artifact@v4
@@ -52,13 +80,18 @@ jobs:
           merge-multiple: true
       - uses: softprops/action-gh-release@v2
         with:
+          tag_name: ${{ needs.version.outputs.tag }}
+          target_commitish: ${{ github.sha }}
+          name: wvw ${{ needs.version.outputs.tag }}
           files: artifacts/*
           generate_release_notes: true
           body: |
-            **wvw** — a desktop app that dances on your workspace.
+            **wvw — wide · vast · wild**
+            a desktop app that dances on your workspace.
             your body is wider, vaster, wilder than this screen allows.
 
-            **mac:** download the `.dmg` for your chip (`arm64` = Apple Silicon, `x64` = Intel). The app is not notarized yet — the first time, right-click wvw in Applications → **Open** → **Open**.
-            **windows:** run the `setup.exe` (or the portable `.exe`). If SmartScreen appears, click **More info → Run anyway**.
+            **mac:** download the `.dmg` for your chip (`arm64` = Apple Silicon M1–M4, `x64` = Intel). The app is not notarized yet: the first time, right-click wvw in Applications → **Open** → **Open**.
+            **windows:** run `wvw-…-windows-setup.exe` (or the portable `.exe`). If SmartScreen appears, click **More info → Run anyway**.
 
+            After launch, wvw lives as a small dancing figure in your menu bar / system tray.
             press ESC anytime to reclaim your screen.

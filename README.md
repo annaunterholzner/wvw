@@ -158,9 +158,9 @@ set WVW_DANCE_NOW=sumi && npm start   # windows cmd
 
 ### releasing a new version
 
-1. Raise `"version"` in `package.json` (e.g. `0.2.0`) and commit.
-2. `git tag v0.2.0 && git push --tags`
-3. GitHub Actions (`.github/workflows/release.yml`) builds the mac `.dmg`s and windows `.exe`s and publishes them as a Release (~10 minutes).
+1. Raise `"version"` in `package.json` (e.g. `0.2.0`).
+2. Commit and push to `main`.
+3. GitHub Actions (`.github/workflows/release.yml`) sees the new version, builds the mac `.dmg`s and windows `.exe`s, and publishes them as Release `v0.2.0` (~10 minutes). Pushes that don't change the version don't create a release.
 
 Builds are currently unsigned. To remove the first-open warnings later, add an Apple Developer ID and a Windows code-signing certificate as repository secrets (`CSC_LINK`, `CSC_KEY_PASSWORD`, `APPLE_ID`, `APPLE_APP_SPECIFIC_PASSWORD`, `APPLE_TEAM_ID`).
 
