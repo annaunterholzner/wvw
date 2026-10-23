@@ -285,7 +285,8 @@
       limb(J.CHEST, J.ELBOW_L, S * 0.05, TEAL); limb(J.ELBOW_L, J.HAND_L, S * 0.042, TEAL);
       limb(J.CHEST, J.ELBOW_R, S * 0.05, TEAL); limb(J.ELBOW_R, J.HAND_R, S * 0.042, TEAL);
       const hx = X(A, J.HEAD), hy = Y(A, J.HEAD), R = S * J.HEAD_R * 1.1;
-      ctx.fillStyle = '#f2efe6'; ctx.beginPath(); ctx.arc(hx + j(), hy + j(), R, 0, TAU); ctx.fill();
+      ctx.fillStyle = INK; ctx.beginPath(); ctx.arc(hx + j(), hy + j(), R, 0, TAU); ctx.fill();
+      ctx.shadowColor = 'transparent'; ctx.lineWidth = Math.max(1.5, S * 0.006); ctx.strokeStyle = 'rgba(249,249,245,0.55)'; ctx.stroke();
       ctx.restore();
     },
   });
