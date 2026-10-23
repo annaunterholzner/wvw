@@ -6,7 +6,7 @@
   const { J } = V;
   const { clamp, lerp, hash, mulberry32, vnoise, TAU, PI } = V.math;
 
-  const INK = '#0b0b0b', PAPER = '#f9f9f5', LIME = '#d7ff3a', TEAL = '#5fd3a5', VIOLET = '#9b8cff', CORAL = '#ff6b4a', COBALT = '#2b4bff';
+  const INK = '#0b0b0b', PAPER = '#f9f9f5', LIME = '#d7ff3a', TEAL = '#5fd3a5', VIOLET = '#9b8cff';
 
   const X = (A, i) => A[i * 2], Y = (A, i) => A[i * 2 + 1];
   function bonesPath(ctx, A) {
@@ -274,7 +274,7 @@
       const nx = X(A, J.NECK), ny = Y(A, J.NECK), px = X(A, J.PELVIS), py = Y(A, J.PELVIS);
       const L = Math.hypot(nx - px, ny - py) || 1, ux = (nx - px) / L, uy = (ny - py) / L, vx = -uy, vy = ux;
       const ws = S * 0.085, wh = S * 0.06;
-      ctx.fillStyle = COBALT; ctx.beginPath();
+      ctx.fillStyle = VIOLET; ctx.beginPath();
       ctx.moveTo(nx + vx * ws + j(), ny + vy * ws + j());
       ctx.lineTo(nx - vx * ws + j(), ny - vy * ws + j());
       ctx.quadraticCurveTo((nx + px) / 2 - vx * wh * 0.6, (ny + py) / 2 - vy * wh * 0.6, px - vx * wh + j(), py - vy * wh + j());
@@ -282,26 +282,15 @@
       ctx.quadraticCurveTo((nx + px) / 2 + vx * wh * 0.6, (ny + py) / 2 + vy * wh * 0.6, nx + vx * ws, ny + vy * ws);
       ctx.fill();
       // arms
-      limb(J.CHEST, J.ELBOW_L, S * 0.05, CORAL); limb(J.ELBOW_L, J.HAND_L, S * 0.042, CORAL);
-      limb(J.CHEST, J.ELBOW_R, S * 0.05, CORAL); limb(J.ELBOW_R, J.HAND_R, S * 0.042, CORAL);
-      // hair whipping against the direction of travel
+      limb(J.CHEST, J.ELBOW_L, S * 0.05, TEAL); limb(J.ELBOW_L, J.HAND_L, S * 0.042, TEAL);
+      limb(J.CHEST, J.ELBOW_R, S * 0.05, TEAL); limb(J.ELBOW_R, J.HAND_R, S * 0.042, TEAL);
       const hx = X(A, J.HEAD), hy = Y(A, J.HEAD), R = S * J.HEAD_R * 1.1;
-      const prev = past(d, 0.15), mvx = hx - X(prev, J.HEAD), mvy = hy - Y(prev, J.HEAD);
-      const ang = Math.atan2(-(mvy) - S * 0.02, -(mvx)) ;
-      ctx.fillStyle = INK; ctx.beginPath();
-      for (let k = -3; k <= 3; k++) {
-        const a = ang + k * 0.28 + (rnd() - 0.5) * 0.15, len = R * (1.4 + rnd() * 1.4);
-        ctx.moveTo(hx + Math.cos(a + 0.18) * R * 0.8, hy + Math.sin(a + 0.18) * R * 0.8);
-        ctx.lineTo(hx + Math.cos(a) * (R + len), hy + Math.sin(a) * (R + len));
-        ctx.lineTo(hx + Math.cos(a - 0.18) * R * 0.8, hy + Math.sin(a - 0.18) * R * 0.8);
-      }
-      ctx.fill();
       ctx.fillStyle = '#f2efe6'; ctx.beginPath(); ctx.arc(hx + j(), hy + j(), R, 0, TAU); ctx.fill();
       ctx.restore();
     },
   });
 
-  // 09 — sumi: calligraphic brush, an ensō for a head, ink that splatters
+  // 09 — sumi: calligraphic brush, a wet dab for a head, ink that splatters
   add({
     id: 'sumi', name: 'sumi', blurb: 'brush and ink, one breath', fps: 12,
     draw(ctx, d, env) {
@@ -335,12 +324,21 @@
         stroke(chain(A2, [J.CHEST, J.ELBOW_R, J.HAND_R]), W * k, col);
         stroke(chain(A2, [J.PELVIS, J.KNEE_L, J.FOOT_L]), W * 1.1 * k, col);
         stroke(chain(A2, [J.PELVIS, J.KNEE_R, J.FOOT_R]), W * 1.1 * k, col);
-        // ensō
-        const hx = X(A2, J.HEAD), hy = Y(A2, J.HEAD), R = S * J.HEAD_R, a0 = 1.9 + hash(d.o.seed) * 2;
+        // head: one wet press of the brush, boiling with the strokes
+        const hx0 = X(A2, J.HEAD), hy0 = Y(A2, J.HEAD), R = S * J.HEAD_R * (k > 1 ? 1.15 : 1);
+        const ang = Math.atan2(hy0 - Y(A2, J.NECK), hx0 - X(A2, J.NECK)), ca = Math.cos(ang), sa = Math.sin(ang);
+        const sd = d.o.seed * 0.37, fr = env.frame;
+        const hx = hx0 + vnoise(fr * 1.3 + sd) * R * 0.12, hy = hy0 + vnoise(fr * 1.3 + sd + 50) * R * 0.12;
         ctx.beginPath();
-        const segs = 36;
-        for (let s = 0; s <= segs; s++) { const t = s / segs, a = a0 + t * TAU * 0.9, rr = R * (1 + 0.06 * Math.sin(t * 9)); s ? ctx.lineTo(hx + Math.cos(a) * rr, hy + Math.sin(a) * rr) : ctx.moveTo(hx + Math.cos(a) * rr, hy + Math.sin(a) * rr); }
-        for (let s = segs; s >= 0; s--) { const t = s / segs, a = a0 + t * TAU * 0.9, rr = R * (1 + 0.06 * Math.sin(t * 9)) - W * 0.9 * k * Math.pow(Math.sin(PI * t), 0.5); ctx.lineTo(hx + Math.cos(a) * rr, hy + Math.sin(a) * rr); }
+        const segs = 30;
+        for (let s2 = 0; s2 <= segs; s2++) {
+          const a = (s2 / segs) * TAU;
+          const w = 1 + 0.13 * vnoise(s2 * 0.9 + fr * 1.7 + sd) + 0.06 * vnoise(s2 * 2.7 + fr * 2.3 + sd + 9);
+          const lx = Math.cos(a) * R * 1.12 * w, ly = Math.sin(a) * R * 0.9 * w;
+          const px = hx + lx * ca - ly * sa, py = hy + lx * sa + ly * ca;
+          s2 ? ctx.lineTo(px, py) : ctx.moveTo(px, py);
+        }
+        ctx.closePath();
         ctx.fillStyle = col; ctx.fill();
       };
       // ink bleed of the last breath
@@ -360,9 +358,9 @@
     },
   });
 
-  // 10 — smear: the gesture as a blurred mass, like paint dragged across glass
+  // 10 — smear: a body of ones and zeros, its gesture dragged across glass
   add({
-    id: 'smear', name: 'smear', blurb: 'the gesture, dragged through glass', fps: 30,
+    id: 'smear', name: 'smear', blurb: 'ones and zeros, dragged through glass', fps: 30,
     draw(ctx, d, env) {
       const S = d.J[J.S], k = 6;
       const st = env.cache.smear || (env.cache.smear = { c: document.createElement('canvas') });
@@ -390,7 +388,28 @@
       c.restore();
       ctx.imageSmoothingEnabled = true; ctx.imageSmoothingQuality = 'high';
       ctx.drawImage(st.c, 0, 0, cw * k, ch * k);
-      stick(ctx, d.J, Math.max(1, S * 0.007), 'rgba(11,11,11,0.85)');
+      // the body itself: ones and zeros along every bone, flickering
+      const A = d.J, fs = Math.max(9, Math.round(S * 0.05)), gap = fs * 0.78;
+      const tick = Math.floor(env.t * 7), sd = d.o.seed;
+      ctx.font = `bold ${fs}px "Courier New", Courier, monospace`;
+      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.lineJoin = 'round'; ctx.lineWidth = Math.max(2, fs * 0.22); ctx.strokeStyle = 'rgba(249,249,245,0.75)';
+      const bits = [];
+      let idx = 0;
+      for (const [a, b] of J.BONES) {
+        const ax = X(A, a), ay = Y(A, a), bx = X(A, b), by = Y(A, b);
+        const steps = Math.max(1, Math.round(Math.hypot(bx - ax, by - ay) / gap));
+        for (let s2 = (a === J.CHEST || a === J.PELVIS) && idx ? 1 : 0; s2 <= steps; s2++) bits.push([lerp(ax, bx, s2 / steps), lerp(ay, by, s2 / steps), idx++]);
+      }
+      const hx = X(A, J.HEAD), hy = Y(A, J.HEAD), R = S * J.HEAD_R * 1.15;
+      const ring = Math.max(6, Math.round((TAU * R) / gap));
+      for (let s2 = 0; s2 < ring; s2++) bits.push([hx + Math.cos((s2 / ring) * TAU) * R, hy + Math.sin((s2 / ring) * TAU) * R, idx++]);
+      for (const [x, y, i] of bits) {
+        // each digit flips at its own pace
+        const ch2 = hash(i * 7.31 + Math.floor(tick / (1 + (i % 3))) * 13.7 + sd) < 0.5 ? '0' : '1';
+        ctx.strokeText(ch2, x, y);
+        ctx.fillStyle = INK; ctx.fillText(ch2, x, y);
+      }
     },
   });
 

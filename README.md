@@ -72,9 +72,9 @@ Further questions the project moves with:
 | 05 | **pixel** | low resolution, high spirit |
 | 06 | **ascii** | a body typed, not drawn |
 | 07 | **dust** | a body of particles that arrives late |
-| 08 | **cutout** | cut paper, pinned and unpinned |
-| 09 | **sumi** | brush and ink, an ensō for a head |
-| 10 | **smear** | the gesture, dragged through glass |
+| 08 | **cutout** | cut paper in violet, teal and lime, pinned and unpinned |
+| 09 | **sumi** | brush and ink, one breath; a wet dab for a head |
+| 10 | **smear** | a body of ones and zeros, its gesture dragged through glass |
 
 **the four moods (movement vocabularies)**
 
