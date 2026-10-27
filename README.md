@@ -5,7 +5,7 @@
 **a desktop app that dances on your workspace.**
 *your body is wider, vaster, wilder than this screen allows.*
 
-`wvw /wɪv/ n.` — a desktop application by aru (anna rebecca unterholzner) · 2026 · [aarruu.com](https://aarruu.com)
+**wvw**: a desktop application by aru (anna rebecca unterholzner) · 2026 · [aarruu.com](https://aarruu.com)
 
 ---
 
