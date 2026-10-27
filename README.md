@@ -5,6 +5,8 @@ a desktop ritual by aru (anna rebecca unterholzner) · 2026 · <a href="https://
 
 <p align="center"><a href="../../releases/latest"><b>↓ download wvw for mac / windows</b></a></p>
 
+<p align="center"><img src="docs/desktop.gif" alt="wvw bodies in six styles arriving and dancing over a browser window on a mac desktop" width="1000"><br><sub>bodies arriving on a desktop, drawn by wvw's own code over a screenshot of a workspace.</sub></p>
+
 <p align="center"><img src="docs/morph.gif" alt="one body moving through all ten styles of wvw" width="840"></p>
 
 ---
