@@ -100,9 +100,9 @@ Download the latest version from the **[Releases](../../releases)** page.
 **mac**
 
 1. Download the `.dmg` for your Mac: `arm64` for Apple Silicon (M1/M2/M3/M4), `x64` for Intel.
-2. Open it and drag **wvw** into **Applications**.
-3. The first time only: wvw is not yet notarized by Apple, so right-click wvw in Applications → **Open** → **Open**.
-   If macOS says the app is "damaged", open Terminal and run `xattr -cr /Applications/wvw.app`, then open it again.
+2. Open it and drag **wvw** into **Applications**. If macOS asks, choose **Replace** (not "Keep Both", which creates copies like "wvw 2").
+3. The first time only: wvw is not yet notarized by Apple, so macOS says it can't verify the app. Click **Done**, then open **System Settings → Privacy & Security**, scroll down and click **Open Anyway**.
+4. If macOS instead says the app is **"damaged"**, it isn't. Open Terminal and run `xattr -cr /Applications/wvw.app`, then open wvw again.
 
 **windows**
 

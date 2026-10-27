@@ -61,6 +61,14 @@ jobs:
         run: npx electron-builder ${{ matrix.target }} --publish never
         env:
           CSC_IDENTITY_AUTO_DISCOVERY: 'false'
+      - name: verify mac signature
+        if: runner.os == 'macOS'
+        run: |
+          for app in dist/mac*/wvw.app; do
+            echo "== $app"
+            codesign --verify --deep --strict --verbose=2 "$app"
+            codesign -dv "$app" 2>&1 | grep -E "Signature|Identifier"
+          done
       - uses: actions/upload-artifact@v4
         with:
           name: wvw-${{ runner.os }}
@@ -90,7 +98,7 @@ jobs:
             a desktop app that dances on your workspace.
             your body is wider, vaster, wilder than this screen allows.
 
-            **mac:** download the `.dmg` for your chip (`arm64` = Apple Silicon M1–M4, `x64` = Intel). The app is not notarized yet: the first time, right-click wvw in Applications → **Open** → **Open**.
+            **mac:** download the `.dmg` for your chip (`arm64` = Apple Silicon M1–M4, `x64` = Intel) and drag wvw into Applications (choose **Replace** if asked). wvw is not yet notarized by Apple, so the first time macOS says it can't verify the app: click **Done**, then go to **System Settings → Privacy & Security**, scroll down and click **Open Anyway**. If macOS says the app is "damaged", open Terminal and run `xattr -cr /Applications/wvw.app`.
             **windows:** run `wvw-…-windows-setup.exe` (or the portable `.exe`). If SmartScreen appears, click **More info → Run anyway**.
 
             After launch, wvw lives as a small dancing figure in your menu bar / system tray.
