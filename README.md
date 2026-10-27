@@ -1,11 +1,11 @@
-# wvw
+<p align="center"><img src="docs/banner.png" alt="wvw: wide · vast · wild. your body is wider, vaster, wilder than this screen allows." width="900"></p>
 
-### wide · vast · wild
+<p align="center"><b>a desktop app that dances on your workspace.</b><br>
+a desktop application by aru (anna rebecca unterholzner) · 2026 · <a href="https://aarruu.com">aarruu.com</a></p>
 
-**a desktop app that dances on your workspace.**
-*your body is wider, vaster, wilder than this screen allows.*
+<p align="center"><a href="../../releases/latest"><b>↓ download wvw for mac / windows</b></a></p>
 
-**wvw**: a desktop application by aru (anna rebecca unterholzner) · 2026 · [aarruu.com](https://aarruu.com)
+<p align="center"><img src="docs/morph.gif" alt="one body moving through all ten styles of wvw" width="840"></p>
 
 ---
 
@@ -62,6 +62,8 @@ Further questions the project moves with:
 - At night the creature sleeps (*rest*, by default 22:00–07:00).
 
 **the ten bodies**
+
+<p align="center"><img src="docs/grid.gif" alt="the ten styles of wvw dancing at once" width="1000"></p>
 
 | | style | |
 |---|---|---|
@@ -122,6 +124,8 @@ Download the latest version from the **[Releases](../../releases)** page.
   - **interruptions on:** tick to let bodies arrive by themselves at random moments
   - **settings…:** rhythm, session length, styles, moods, size, bursts, chorus, rest, start at login
 - To have wvw always running, tick **start wvw when I log in** in settings.
+
+<p align="center"><img src="docs/settings.png" alt="the wvw settings window with live previews of the ten styles" width="760"><br><sub>the settings window: every style dances live, click to invite or uninvite it.</sub></p>
 
 ## close
 
