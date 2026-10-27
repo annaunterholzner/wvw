@@ -1,7 +1,7 @@
 <p align="center"><img src="docs/banner.png" alt="wvw: wide · vast · wild. your body is wider, vaster, wilder than this screen allows." width="900"></p>
 
 <p align="center"><b>a desktop app that dances on your workspace.</b><br>
-a desktop application by aru (anna rebecca unterholzner) · 2026 · <a href="https://aarruu.com">aarruu.com</a></p>
+a desktop ritual by aru (anna rebecca unterholzner) · 2026 · <a href="https://aarruu.com">aarruu.com</a></p>
 
 <p align="center"><a href="../../releases/latest"><b>↓ download wvw for mac / windows</b></a></p>
 
@@ -43,10 +43,11 @@ Further questions the project moves with:
 - How can practices of contact improvisation (non-performing, non-violent body communication, rolling, falling, giving weight) be translated into a digital medium?
 - Can a personal ritual of embodied freedom be scheduled, or does it have to arrive by surprise?
 
-### lineage
+### inspiration
 
-- **motionlab / cologne** *(practice):* contact improvisation as movement-driven decision-making. A system of rolling, falling, being upside down, giving weight.
-- **sondra perry** *(medium):* video, computer-based media and performance as ways to reflect critically on new technologies of the body. Digital tools as material to be pressed back against.
+wvw is inspired by **contact improvisation** as movement-driven decision-making: a system of rolling, falling, being upside down, giving weight.
+
+It is also inspired by artists such as **sondra perry**, who think about computer-based media and performance as ways to reflect critically on new technologies of the body.
 
 ---
 
@@ -113,6 +114,8 @@ Download the latest version from the **[Releases](../../releases)** page.
 
 ## activate
 
+<p align="center"><img src="docs/icons.png" alt="the wvw icon: a black dancing figure on lime green, shown as the app, in the Dock and in the menu bar" width="900"></p>
+
 - **First launch:** the settings window opens, and a first small body says hello after a few seconds.
 - wvw then stays **open and running**, like any other program:
   - **mac:** its icon stays in the **Dock** with the small dot underneath that shows it's running. A small dancing figure also sits in the **menu bar** (top right).
@@ -125,7 +128,9 @@ Download the latest version from the **[Releases](../../releases)** page.
   - **settings…:** rhythm, session length, styles, moods, size, bursts, chorus, rest, start at login
 - To have wvw always running, tick **start wvw when I log in** in settings.
 
-<p align="center"><img src="docs/settings.png" alt="the wvw settings window with live previews of the ten styles" width="760"><br><sub>the settings window: every style dances live, click to invite or uninvite it.</sub></p>
+<p align="center"><img src="docs/menu.png" alt="the wvw menu in the mac menu bar" width="300"><br><sub>the menu behind the little figure in the menu bar</sub></p>
+
+<p align="center"><img src="docs/settings.gif" alt="a walk through the wvw settings window: inviting styles, choosing rhythm, session length, mood and size" width="760"><br><sub>the settings window: every style dances live. invite or uninvite styles, choose the rhythm, how long it dances, its moods, its size, and when it sleeps.</sub></p>
 
 ## close
 
@@ -174,5 +179,5 @@ Builds are currently unsigned. To remove the first-open warnings later, add an A
 
 ---
 
-wvw · a desktop application by aru · 2026 · MIT license
+wvw · a desktop ritual by aru · 2026 · MIT license
 *for reading. for looking. for moving.*
